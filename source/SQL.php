@@ -84,7 +84,6 @@
       return $this;
     }
 
-
     /**
      * @param array|string $fields
      *
@@ -98,7 +97,6 @@
       return $this;
     }
 
-
     /**
      * @param string      $field
      * @param string|null $name
@@ -108,6 +106,19 @@
     public function max($field, $name = null)
     {
       $column = 'MAX(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
+      $this->optimizeSelect($column);
+      return $this;
+    }
+
+    /**
+     * @param string      $field
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function min($field, $name = null)
+    {
+      $column = 'MIN(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
       return $this;
     }
