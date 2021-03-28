@@ -613,4 +613,18 @@
       return $this;
     }
 
+    /**
+     * @param int $perPage
+     * @param int $page
+     *
+     * @return $this
+     */
+    public function pagination($perPage, $page)
+    {
+      $this->limit = $perPage;
+      $this->offset = (($page > 0 ? $page : 1) - 1) * $perPage;
+
+      return $this;
+    }
+
   }
