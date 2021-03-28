@@ -122,4 +122,44 @@
       $this->optimizeSelect($column);
       return $this;
     }
+
+    /**
+     * @param string      $field
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function sum($field, $name = null)
+    {
+      $column = 'SUM(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
+      $this->optimizeSelect($column);
+      return $this;
+    }
+
+    /**
+     * @param string      $field
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function count($field, $name = null)
+    {
+      $column = 'COUNT(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
+      $this->optimizeSelect($column);
+      return $this;
+    }
+
+    /**
+     * @param string      $field
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function avg($field, $name = null)
+    {
+      $column = 'AVG(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
+      $this->optimizeSelect($column);
+      return $this;
+    }
+
   }
