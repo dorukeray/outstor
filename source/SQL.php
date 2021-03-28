@@ -686,12 +686,39 @@
     }
 
     /**
+     * @return int
+     */
+    public function queryCount()
+    {
+      return $this->queryCount;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuery()
+    {
+      return $this->query;
+    }
+
+    /**
      * @return void
      */
     public function __destruct()
     {
       $this->pdo = null;
     }
+    
+    /**
+     * @param $data
+     *
+     * @return string
+     */
+    public function escape($data)
+    {
+      return $data === null ? 'NULL' : (is_int($data) || is_float($data) ? $data : $this->pdo->quote($data));
+    }
+
 
     /**
      * @return void
