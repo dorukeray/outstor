@@ -646,5 +646,16 @@
       return $this;
     }
 
+    /**
+     * @param string|array $groupBy
+     *
+     * @return $this
+     */
+    public function groupBy($groupBy)
+    {
+      $this->groupBy = is_array($groupBy) ? implode(', ', $groupBy) : $groupBy;
+
+      return $this;
+    }
 
   }
