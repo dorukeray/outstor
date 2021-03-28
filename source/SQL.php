@@ -97,4 +97,18 @@
 
       return $this;
     }
+
+
+    /**
+     * @param string      $field
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function max($field, $name = null)
+    {
+      $column = 'MAX(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
+      $this->optimizeSelect($column);
+      return $this;
+    }
   }
