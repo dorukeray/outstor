@@ -83,4 +83,18 @@
       
       return $this;
     }
+
+
+    /**
+     * @param array|string $fields
+     *
+     * @return $this
+     */
+    public function select($fields)
+    {
+      $select = is_array($fields) ? implode(', ', $fields) : $fields;
+      $this->optimizeSelect($select);
+
+      return $this;
+    }
   }
