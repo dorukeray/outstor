@@ -162,4 +162,28 @@
       return $this;
     }
 
+    /**
+     * @param string      $table
+     * @param string|null $field1
+     * @param string|null $operator
+     * @param string|null $field2
+     * @param string      $type
+     *
+     * @return $this
+     */
+    public function join($table, $field1 = null, $operator = null, $field2 = null, $type = '')
+    {
+      $on = $field1;
+      $table = $this->prefix . $table;
+      if (!is_null($operator)) {
+        $on = !in_array($operator, $this->operators)
+          ? $field1 . ' = ' . $operator
+          : $field1 . ' ' . $operator . ' ' . $field2;
+      }
+      $this->join = (is_null($this->join))
+        ? ' ' . $type . 'JOIN' . ' ' . $table . ' ON ' . $on
+        : $this->join . ' ' . $type . 'JOIN' . ' ' . $table . ' ON ' . $on;
+      return $this;
+    }
+
   }
