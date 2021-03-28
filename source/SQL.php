@@ -328,4 +328,63 @@
       return $this;
     }
 
+    /**
+     * @param array|string $where
+     * @param string|null  $operator
+     * @param string|null  $val
+     *
+     * @return $this
+     */
+    public function orWhere($where, $operator = null, $val = null)
+    {
+      return $this->where($where, $operator, $val, '', 'OR');
+    }
+
+    /**
+     * @param array|string $where
+     * @param string|null  $operator
+     * @param string|null  $val
+     *
+     * @return $this
+     */
+    public function notWhere($where, $operator = null, $val = null)
+    {
+      return $this->where($where, $operator, $val, 'NOT ', 'AND');
+    }
+
+    /**
+     * @param array|string $where
+     * @param string|null  $operator
+     * @param string|null  $val
+     *
+     * @return $this
+     */
+    public function orNotWhere($where, $operator = null, $val = null)
+    {
+      return $this->where($where, $operator, $val, 'NOT ', 'OR');
+    }
+
+    /**
+     * @param string $where
+     * @param bool   $not
+     *
+     * @return $this
+     */
+    public function whereNull($where, $not = false)
+    {
+      $where = $where . ' IS ' . ($not ? 'NOT' : '') . ' NULL';
+      $this->where = is_null($this->where) ? $where : $this->where . ' ' . 'AND ' . $where;
+
+      return $this;
+    }
+
+    /**
+     * @param string $where
+     *
+     * @return $this
+     */
+    public function whereNotNull($where)
+    {
+      return $this->whereNull($where, true);
+    }
   }
