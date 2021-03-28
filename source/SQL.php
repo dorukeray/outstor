@@ -527,5 +527,63 @@
       return $this->between($field, $value1, $value2, 'NOT ', 'OR');
     }
 
-  
+    
+    /**
+     * @param string $field
+     * @param string $data
+     * @param string $type
+     * @param string $andOr
+     *
+     * @return $this
+     */
+    public function like($field, $data, $type = '', $andOr = 'AND')
+    {
+      $like = $this->escape($data);
+      $where = $field . ' ' . $type . 'LIKE ' . $like;
+
+      if ($this->grouped) {
+        $where = '(' . $where;
+        $this->grouped = false;
+      }
+
+      $this->where = is_null($this->where)
+        ? $where
+        : $this->where . ' ' . $andOr . ' ' . $where;
+
+      return $this;
+    }
+
+    /**
+     * @param string $field
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function orLike($field, $data)
+    {
+      return $this->like($field, $data, '', 'OR');
+    }
+
+    /**
+     * @param string $field
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function notLike($field, $data)
+    {
+      return $this->like($field, $data, 'NOT ', 'AND');
+    }
+
+    /**
+     * @param string $field
+     * @param string $data
+     *
+     * @return $this
+     */
+    public function orNotLike($field, $data)
+    {
+      return $this->like($field, $data, 'NOT ', 'OR');
+    }
+
   }
