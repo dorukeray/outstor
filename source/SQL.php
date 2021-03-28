@@ -387,4 +387,50 @@
     {
       return $this->whereNull($where, true);
     }
+
+
+    /**
+     * @param string $field
+     * @param array  $keys
+     * @param string $type
+     * @param string $andOr
+     *
+     * @return $this
+     */
+    public function in($field, array $keys, $type = '', $andOr = 'AND')
+    {
+      if (is_array($keys)) {
+        $_keys = [];
+        foreach ($keys as $k => $v) {
+          $_keys[] = is_numeric($v) ? $v : $this->escape($v);
+        }
+        $where = $field . ' ' . $type . 'IN (' . implode(', ', $_keys) . ')';
+
+        if ($this->grouped) {
+          $where = '(' . $where;
+          $this->grouped = false;
+        }
+
+        $this->where = is_null($this->where)
+          ? $where
+          : $this->where . ' ' . $andOr . ' ' . $where;
+      }
+
+      return $this;
+    }
+
+
+     /**
+     * @param Closure $obj
+     *
+     * @return $this
+     */
+    public function grouped(Closure $obj)
+    {
+      $this->grouped = true;
+      call_user_func_array($obj, [$this]);
+      $this->where .= ')';
+
+      return $this;
+    }
   }
