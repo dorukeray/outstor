@@ -12,7 +12,7 @@
    * @url      <https://github.com/dorukdorkodu/outstor>
    * @license  The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  class SQL
+  class SQLQuery
   {
     /**
      * @var PDO|null
