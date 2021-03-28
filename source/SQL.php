@@ -419,6 +419,38 @@
       return $this;
     }
 
+     /**
+     * @param string $field
+     * @param array  $keys
+     *
+     * @return $this
+     */
+    public function notIn($field, array $keys)
+    {
+      return $this->in($field, $keys, 'NOT ', 'AND');
+    }
+
+    /**
+     * @param string $field
+     * @param array  $keys
+     *
+     * @return $this
+     */
+    public function orIn($field, array $keys)
+    {
+      return $this->in($field, $keys, '', 'OR');
+    }
+
+    /**
+     * @param string $field
+     * @param array  $keys
+     *
+     * @return $this
+     */
+    public function orNotIn($field, array $keys)
+    {
+      return $this->in($field, $keys, 'NOT ', 'OR');
+    }
 
      /**
      * @param Closure $obj
