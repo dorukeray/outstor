@@ -186,4 +186,97 @@
       return $this;
     }
 
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function innerJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'INNER ');
+    }
+
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function innerJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'INNER ');
+    }
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function leftJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'LEFT ');
+    }
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function rightJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'RIGHT ');
+    }
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function fullOuterJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'FULL OUTER ');
+    }
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function leftOuterJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'LEFT OUTER ');
+    }
+
+    /**
+     * @param string $table
+     * @param string $field1
+     * @param string $operator
+     * @param string $field2
+     *
+     * @return $this
+     */
+    public function rightOuterJoin($table, $field1, $operator = '', $field2 = '')
+    {
+      return $this->join($table, $field1, $operator, $field2, 'RIGHT OUTER ');
+    }
+
+
   }
