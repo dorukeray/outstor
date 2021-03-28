@@ -32,11 +32,7 @@
     protected $groupBy = null;
     protected $having = null;
     protected $grouped = false;
-    protected $numRows = 0;
-    protected $insertId = null;
     protected $query = null;
-    protected $error = null;
-    protected $result = [];
     protected $prefix = null;
 
     /**
@@ -53,11 +49,6 @@
      * @var bool
      */
     protected $debug = true;
-
-    /**
-     * @var int Total transaction count
-     */
-    protected $transactionCount = 0;
     
     /**
      * @param $table
@@ -683,14 +674,6 @@
     }
 
     /**
-     * @return string|null
-     */
-    public function getQuery()
-    {
-      return $this->query;
-    }
-
-    /**
      * @return void
      */
     public function __destruct()
@@ -748,7 +731,6 @@
 
       return $query;
     }
-
     
     /**
      * @param $data
@@ -759,7 +741,6 @@
     {
       return $data === null ? 'NULL' : (is_int($data) || is_float($data) ? $data : $this->pdo->quote($data));
     }
-
 
     /**
      * @return void
@@ -776,12 +757,7 @@
       $this->having = null;
       $this->join = null;
       $this->grouped = false;
-      $this->numRows = 0;
-      $this->insertId = null;
       $this->query = null;
-      $this->error = null;
-      $this->result = [];
-      $this->transactionCount = 0;
     }
 
     /**
@@ -797,4 +773,13 @@
         ? $fields
         : $this->select . ', ' . $fields;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getQuery()
+    {
+      return $this->query;
+    }
+
   }
