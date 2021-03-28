@@ -658,4 +658,31 @@
       return $this;
     }
 
+    /**
+     * @param string            $field
+     * @param string|array|null $operator
+     * @param string|null       $val
+     *
+     * @return $this
+     */
+    public function having($field, $operator = null, $val = null)
+    {
+      if (is_array($operator)) {
+        $fields = explode('?', $field);
+        $where = '';
+        foreach ($fields as $key => $value) {
+          if (!empty($value)) {
+            $where .= $value . (isset($operator[$key]) ? $this->escape($operator[$key]) : '');
+          }
+        }
+        $this->having = $where;
+      } elseif (!in_array($operator, $this->operators)) {
+        $this->having = $field . ' > ' . $this->escape($operator);
+      } else {
+        $this->having = $field . ' ' . $operator . ' ' . $this->escape($val);
+      }
+
+      return $this;
+    }
+
   }
