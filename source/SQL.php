@@ -278,5 +278,54 @@
       return $this->join($table, $field1, $operator, $field2, 'RIGHT OUTER ');
     }
 
+ /**
+     * @param array|string $where
+     * @param string       $operator
+     * @param string       $val
+     * @param string       $type
+     * @param string       $andOr
+     *
+     * @return $this
+     */
+    public function where($where, $operator = null, $val = null, $type = '', $andOr = 'AND')
+    {
+      if (is_array($where) && !empty($where)) {
+        $_where = [];
+        foreach ($where as $column => $data) {
+          $_where[] = $type . $column . '=' . $this->escape($data);
+        }
+        $where = implode(' ' . $andOr . ' ', $_where);
+      } else {
+        if (is_null($where) || empty($where)) {
+          return $this;
+        }
+
+        if (is_array($operator)) {
+          $params = explode('?', $where);
+          $_where = '';
+          foreach ($params as $key => $value) {
+            if (!empty($value)) {
+              $_where .= $type . $value . (isset($operator[$key]) ? $this->escape($operator[$key]) : '');
+            }
+          }
+          $where = $_where;
+        } elseif (!in_array($operator, $this->operators) || $operator == false) {
+          $where = $type . $where . ' = ' . $this->escape($operator);
+        } else {
+          $where = $type . $where . ' ' . $operator . ' ' . $this->escape($val);
+        }
+      }
+
+      if ($this->grouped) {
+        $where = '(' . $where;
+        $this->grouped = false;
+      }
+
+      $this->where = is_null($this->where)
+        ? $where
+        : $this->where . ' ' . $andOr . ' ' . $where;
+
+      return $this;
+    }
 
   }
