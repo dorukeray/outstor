@@ -465,4 +465,67 @@
 
       return $this;
     }
+
+
+    /**
+     * @param string     $field
+     * @param string|int $value1
+     * @param string|int $value2
+     * @param string     $type
+     * @param string     $andOr
+     *
+     * @return $this
+     */
+    public function between($field, $value1, $value2, $type = '', $andOr = 'AND')
+    {
+      $where = '(' . $field . ' ' . $type . 'BETWEEN ' . ($this->escape($value1) . ' AND ' . $this->escape($value2)) . ')';
+      if ($this->grouped) {
+        $where = '(' . $where;
+        $this->grouped = false;
+      }
+
+      $this->where = is_null($this->where)
+        ? $where
+        : $this->where . ' ' . $andOr . ' ' . $where;
+
+      return $this;
+    }
+
+    /**
+     * @param string     $field
+     * @param string|int $value1
+     * @param string|int $value2
+     *
+     * @return $this
+     */
+    public function notBetween($field, $value1, $value2)
+    {
+      return $this->between($field, $value1, $value2, 'NOT ', 'AND');
+    }
+
+    /**
+     * @param string     $field
+     * @param string|int $value1
+     * @param string|int $value2
+     *
+     * @return $this
+     */
+    public function orBetween($field, $value1, $value2)
+    {
+      return $this->between($field, $value1, $value2, '', 'OR');
+    }
+
+    /**
+     * @param string     $field
+     * @param string|int $value1
+     * @param string|int $value2
+     *
+     * @return $this
+     */
+    public function orNotBetween($field, $value1, $value2)
+    {
+      return $this->between($field, $value1, $value2, 'NOT ', 'OR');
+    }
+
+  
   }
