@@ -16,28 +16,16 @@ Simple. Use your favorite dependency util and autoload the `Dorkodu\Outstor` nam
 
 If want to see everything you need, check out the [docs](DOCS.md).
 
-### **It has a few components, more on the way :**
+### **It has a few components, and more on the way :**
 
-- **DB :** a PDO wrapper with SQL query building.
+- **DB :** a PDO wrapper.
+- **SQLQuery :** a SQL query builder.
 - **FileStorage :** useful and intuitive API for file system operations.
 
 ### Here is a sample :
 
 ```php
-class SampleTest extends Seekr 
-{
-  // This test is designed to succeed
-  public function testOne()
-  {
-    Say::equal( 1, 1 );
-  }
-  
-  // This test is designed to fail
-  public function testTwo()
-  {
-    Say::equal( 1, 2 );
-  }
-}
+
 ```
 
 ## Author
