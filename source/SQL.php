@@ -708,6 +708,61 @@
     {
       $this->pdo = null;
     }
+
+    /**
+     * @param string|bool $type
+     * @param string|null $argument
+     *
+     * @return mixed
+     */
+    public function get($type = null, $argument = null)
+    {
+      $this->limit = 1;
+      $query = $this->getAll(true);
+      return $type === true ? $query : $this->query($query, false, $type, $argument);
+    }
+
+    /**
+     * @param bool|string $type
+     * @param string|null $argument
+     *
+     * @return mixed
+     */
+    public function getAll($type = null, $argument = null)
+    {
+      $query = 'SELECT ' . $this->select . ' FROM ' . $this->from;
+
+      if (!is_null($this->join)) {
+        $query .= $this->join;
+      }
+
+      if (!is_null($this->where)) {
+        $query .= ' WHERE ' . $this->where;
+      }
+
+      if (!is_null($this->groupBy)) {
+        $query .= ' GROUP BY ' . $this->groupBy;
+      }
+
+      if (!is_null($this->having)) {
+        $query .= ' HAVING ' . $this->having;
+      }
+
+      if (!is_null($this->orderBy)) {
+        $query .= ' ORDER BY ' . $this->orderBy;
+      }
+
+      if (!is_null($this->limit)) {
+        $query .= ' LIMIT ' . $this->limit;
+      }
+
+      if (!is_null($this->offset)) {
+        $query .= ' OFFSET ' . $this->offset;
+      }
+
+      return $type === true ? $query : $this->query($query, true, $type, $argument);
+    }
+
     
     /**
      * @param $data
