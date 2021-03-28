@@ -1,5 +1,8 @@
 <?php
   namespace Dorkodu\Outstor;
+  
+  use Closure;
+  
   /**
    * SQL Query Builder
    *
@@ -185,20 +188,6 @@
         : $this->join . ' ' . $type . 'JOIN' . ' ' . $table . ' ON ' . $on;
       return $this;
     }
-
-    /**
-     * @param string $table
-     * @param string $field1
-     * @param string $operator
-     * @param string $field2
-     *
-     * @return $this
-     */
-    public function innerJoin($table, $field1, $operator = '', $field2 = '')
-    {
-      return $this->join($table, $field1, $operator, $field2, 'INNER ');
-    }
-
 
     /**
      * @param string $table
@@ -715,20 +704,17 @@
      *
      * @return mixed
      */
-    public function get($type = null, $argument = null)
+    public function get()
     {
       $this->limit = 1;
       $query = $this->getAll(true);
-      return $type === true ? $query : $this->query($query, false, $type, $argument);
+      return $query;
     }
 
     /**
-     * @param bool|string $type
-     * @param string|null $argument
-     *
-     * @return mixed
+     * @return string
      */
-    public function getAll($type = null, $argument = null)
+    public function getAll()
     {
       $query = 'SELECT ' . $this->select . ' FROM ' . $this->from;
 
@@ -760,7 +746,7 @@
         $query .= ' OFFSET ' . $this->offset;
       }
 
-      return $type === true ? $query : $this->query($query, true, $type, $argument);
+      return $query;
     }
 
     
