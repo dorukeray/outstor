@@ -32,7 +32,9 @@
     protected $groupBy = null;
     protected $having = null;
     protected $grouped = false;
+    
     protected $query = null;
+
     protected $prefix = null;
 
     /**
@@ -46,9 +48,13 @@
     protected $queryCount = 0;
 
     /**
-     * @var bool
+     * Class constructor.
+     * @param string $prefix optional prefix for table names.
      */
-    protected $debug = true;
+    public function __construct(string $prefix = '')
+    {
+      $this->prefix = $prefix;
+    }
     
     /**
      * @param $table
@@ -101,6 +107,7 @@
     {
       $column = 'MAX(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
+      
       return $this;
     }
 
@@ -114,6 +121,7 @@
     {
       $column = 'MIN(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
+      
       return $this;
     }
 
@@ -127,6 +135,7 @@
     {
       $column = 'SUM(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
+      
       return $this;
     }
 
@@ -140,6 +149,7 @@
     {
       $column = 'COUNT(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
+      
       return $this;
     }
 
@@ -153,6 +163,7 @@
     {
       $column = 'AVG(' . $field . ')' . (!is_null($name) ? ' AS ' . $name : '');
       $this->optimizeSelect($column);
+      
       return $this;
     }
 
@@ -177,7 +188,8 @@
       $this->join = (is_null($this->join))
         ? ' ' . $type . 'JOIN' . ' ' . $table . ' ON ' . $on
         : $this->join . ' ' . $type . 'JOIN' . ' ' . $table . ' ON ' . $on;
-      return $this;
+      
+        return $this;
     }
 
     /**
@@ -671,14 +683,6 @@
     public function queryCount()
     {
       return $this->queryCount;
-    }
-
-    /**
-     * @return void
-     */
-    public function __destruct()
-    {
-      $this->pdo = null;
     }
 
     /**
