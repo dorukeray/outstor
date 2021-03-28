@@ -586,4 +586,19 @@
       return $this->like($field, $data, 'NOT ', 'OR');
     }
 
+    /**
+     * @param int      $limit
+     * @param int|null $limitEnd
+     *
+     * @return $this
+     */
+    public function limit($limit, $limitEnd = null)
+    {
+      $this->limit = !is_null($limitEnd)
+        ? $limit . ', ' . $limitEnd
+        : $limit;
+
+      return $this;
+    }
+
   }
