@@ -686,19 +686,47 @@
     }
 
     /**
-     * @return int
+     * @return void
      */
-    public function numRows()
+    public function __destruct()
     {
-      return $this->numRows;
+      $this->pdo = null;
     }
 
     /**
-     * @return int|null
+     * @return void
      */
-    public function insertId()
+    protected function reset()
     {
-      return $this->insertId;
+      $this->select = '*';
+      $this->from = null;
+      $this->where = null;
+      $this->limit = null;
+      $this->offset = null;
+      $this->orderBy = null;
+      $this->groupBy = null;
+      $this->having = null;
+      $this->join = null;
+      $this->grouped = false;
+      $this->numRows = 0;
+      $this->insertId = null;
+      $this->query = null;
+      $this->error = null;
+      $this->result = [];
+      $this->transactionCount = 0;
     }
 
+    /**
+     * Optimize Selected fields for the query
+     *
+     * @param string $fields
+     *
+     * @return void
+     */
+    private function optimizeSelect($fields)
+    {
+      $this->select = $this->select === '*'
+        ? $fields
+        : $this->select . ', ' . $fields;
+    }
   }
