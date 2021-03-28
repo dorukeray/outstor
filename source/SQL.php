@@ -601,4 +601,16 @@
       return $this;
     }
 
+    /**
+     * @param int $offset
+     *
+     * @return $this
+     */
+    public function offset($offset)
+    {
+      $this->offset = $offset;
+
+      return $this;
+    }
+
   }
