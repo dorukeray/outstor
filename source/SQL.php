@@ -627,4 +627,24 @@
       return $this;
     }
 
+    /**
+     * @param string      $orderBy
+     * @param string|null $orderDir
+     *
+     * @return $this
+     */
+    public function orderBy($orderBy, $orderDir = null)
+    {
+      if (!is_null($orderDir)) {
+        $this->orderBy = $orderBy . ' ' . strtoupper($orderDir);
+      } else {
+        $this->orderBy = stristr($orderBy, ' ') || strtolower($orderBy) === 'rand()'
+          ? $orderBy
+          : $orderBy . ' ASC';
+      }
+
+      return $this;
+    }
+
+
   }
