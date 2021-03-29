@@ -12,8 +12,6 @@
    */
   class OracleConnection extends IConnection
   {
-    public const TYPE = 'oracle';
-    
     public $host;
 
     public $user;

@@ -12,8 +12,6 @@
    */
   class SqliteConnection extends IConnection
   {
-    public const TYPE = 'sqlite';
-    
     /**
      * Database Connection Constructor.
      *

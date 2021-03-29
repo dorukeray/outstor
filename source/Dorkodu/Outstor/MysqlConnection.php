@@ -10,8 +10,6 @@
    */
   class MysqlConnection extends IConnection
   {
-    public const TYPE = 'mysql';
-    
     public $host;
 
     public $user;

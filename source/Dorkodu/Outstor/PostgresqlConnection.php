@@ -12,8 +12,6 @@
    */
   class PostgresqlConnection extends IConnection
   {
-    public const TYPE = 'pgsql';
-    
     public $host;
 
     public $user;
