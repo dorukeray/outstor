@@ -1,8 +1,6 @@
 <?php
   namespace Dorkodu\Outstor;
 
-  use Dorkodu\Outstor\DBConnection;
-
   /**
    * MysqlConnection - MySQL Database Connection Value Object
    *
@@ -10,7 +8,7 @@
    * @url <https://github.com/dorukdorkodu/outstor>
    * @license The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  class MysqlConnection implements DBConnection
+  class MysqlConnection extends IConnection
   {
     public const TYPE = 'mysql';
     

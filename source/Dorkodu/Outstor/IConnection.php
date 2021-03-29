@@ -2,13 +2,13 @@
   namespace Dorkodu\Outstor;
 
   /**
-   * DBConnection - SQL Database Connection Value Object
+   * IConnection - Database Connection Interface
    *
    * @author Doruk Eray (@dorkodu) <doruk@dorkodu.com>
    * @url <https://github.com/dorukdorkodu/outstor>
    * @license The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  abstract class DBConnection
+  abstract class IConnection
   {
     public $database;
 

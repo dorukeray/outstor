@@ -1,7 +1,7 @@
 <?php
   namespace Dorkodu\Outstor;
 
-  use Dorkodu\Outstor\DBConnection;
+  use Dorkodu\Outstor\IConnection;
 
   /**
    * SqliteConnection - SQLite Database Connection Value Object
@@ -10,7 +10,7 @@
    * @url <https://github.com/dorukdorkodu/outstor>
    * @license The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  class SqliteConnection implements DBConnection
+  class SqliteConnection extends IConnection
   {
     public const TYPE = 'sqlite';
     

@@ -2,6 +2,7 @@
   namespace Dorkodu\Outstor;
   
   use Closure;
+  use PDO;
   
   /**
    * SQL Query Builder
@@ -51,11 +52,17 @@
      * Class constructor.
      * @param string $prefix optional prefix for table names.
      */
-    public function __construct(string $prefix = '')
+    public function __construct(\PDO $pdo, string $prefix = '')
     {
+      $this->pdo = $pdo;
       $this->prefix = $prefix;
     }
-    
+
+    public function getPdo()
+    {
+      return $this->pdo;
+    }
+
     /**
      * @param $table
      *
@@ -743,7 +750,11 @@
      */
     public function escape($data)
     {
-      return $data === null ? 'NULL' : (is_int($data) || is_float($data) ? $data : $this->pdo->quote($data));
+      return $data === null 
+        ? 'NULL' 
+        : (is_int($data) || is_float($data) 
+            ? $data 
+            : $this->pdo->quote($data));
     }
 
     /**

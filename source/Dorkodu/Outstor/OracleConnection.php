@@ -1,7 +1,7 @@
 <?php
   namespace Dorkodu\Outstor;
 
-  use Dorkodu\Outstor\DBConnection;
+  use Dorkodu\Outstor\IConnection;
 
   /**
    * OracleConnection - Oracle Database Connection Value Object
@@ -10,7 +10,7 @@
    * @url <https://github.com/dorukdorkodu/outstor>
    * @license The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  class OracleConnection implements DBConnection
+  class OracleConnection extends IConnection
   {
     public const TYPE = 'oracle';
     
