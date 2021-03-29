@@ -12,7 +12,7 @@
    */
   class SqliteConnection implements DBConnection
   {
-    public const DRIVER = 'sqlite';
+    public const TYPE = 'sqlite';
     
     /**
      * Database Connection Constructor.
