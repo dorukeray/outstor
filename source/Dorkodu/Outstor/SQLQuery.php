@@ -7,7 +7,6 @@
   /**
    * SQL Query Builder
    *
-   * @class    SQL
    * @author   Doruk Eray (@dorkodu) <doruk@dorkodu.com>
    * @web      <http://dorkodu.com>
    * @url      <https://github.com/dorukdorkodu/outstor>
@@ -56,11 +55,6 @@
     {
       $this->pdo = $pdo;
       $this->prefix = $prefix;
-    }
-
-    public function getPdo()
-    {
-      return $this->pdo;
     }
 
     /**
