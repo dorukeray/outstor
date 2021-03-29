@@ -10,5 +10,20 @@
    */
   class DBConnection
   {
+    public $driver;
+    public $host;
+    public $database;
+    public $user;
+    public $password;
+    public $port;
 
+    public $charset;
+    public $collation;
+
+    public function __get($name)
+    {
+      return $this->$name;
+    }
+
+    public function __set($name, $value) { }
   }
