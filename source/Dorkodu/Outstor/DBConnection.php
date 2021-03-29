@@ -48,6 +48,27 @@
       $this->collation = $collation;
     }
 
+    public function getDSN()
+    {
+      $dsn = '';
+      if ($this->driver === 'mysql' || $this->driver === 'pgsql') {
+        $dsn = sprintf('%s:host=%s;%sdbname=%s',
+                $this->driver,
+                str_replace(':' . $this->port, '', $this->host),
+                ($this->port !== '' ? 'port=' . $this->port . ';' : ''),
+                $this->database
+              );
+      } elseif ($this->driver === 'sqlite') {
+        $dsn = sprintf('sqlite:%s', $this->database);
+      } elseif ($this->driver === 'oracle') {
+        $dsn = sprintf('oci:dbname=%s/%s',
+                        $this->host,
+                        $this->database
+                      );
+      }
+      return $dsn;
+    }
+
     public function __get($name)
     {
       return $this->$name;
