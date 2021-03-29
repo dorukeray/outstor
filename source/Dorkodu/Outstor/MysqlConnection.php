@@ -54,10 +54,10 @@
 
     public function getDSN()
     {
-      $dsn = sprintf('mysql:host=%s;%sdbname=%s',
-      str_replace(':' . $this->port, '', $this->host),
-      ($this->port !== '' ? 'port=' . $this->port . ';' : ''),
-      $this->database
-    );
+      return sprintf('mysql:host=%s;%sdbname=%s',
+        str_replace(':' . $this->port, '', $this->host),
+        ($this->port !== '' ? 'port=' . $this->port . ';' : ''),
+        $this->database
+      );
     }
   }
