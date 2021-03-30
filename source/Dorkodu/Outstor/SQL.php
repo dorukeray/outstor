@@ -808,6 +808,34 @@
       return $query;
     }
 
+  /**
+     * @param bool $type
+     *
+     * @return mixed|string
+     */
+    public function delete($type = false)
+    {
+      $query = 'DELETE FROM ' . $this->from;
+
+      if (!is_null($this->where)) {
+        $query .= ' WHERE ' . $this->where;
+      }
+
+      if (!is_null($this->orderBy)) {
+        $query .= ' ORDER BY ' . $this->orderBy;
+      }
+
+      if (!is_null($this->limit)) {
+        $query .= ' LIMIT ' . $this->limit;
+      }
+
+      if ($query === 'DELETE FROM ' . $this->from) {
+        $query = 'TRUNCATE TABLE ' . $this->from;
+      }
+
+      return $query;
+    }
+
     /**
      * @return void
      */
