@@ -1,6 +1,9 @@
 # Outstor Documentation
 
+Welcome to the simple documentation of Outstor.
+
 ## Quick Usage
+
 ```php
 use Dorkodu\Outstor\DB;
 use Dorkodu\Outstor\SQLQuery;
@@ -63,10 +66,6 @@ $config = [
 	# Database Prefix (optional)
 	# default value: null
 	'prefix'     => '',
-
-	# Cache Directory of the Sql Result (optional)
-	# default value: __DIR__ . '/cache/'
-	'cachedir'	=> __DIR__ . '/cache/sql/'
 ];
 
 $db = new \Buki\Pdox($config);
