@@ -12,7 +12,7 @@
    * @url      <https://github.com/dorukdorkodu/outstor>
    * @license  The MIT License (MIT) - <http://opensource.org/licenses/MIT>
    */
-  class SQLQuery
+  class SQL
   {
     /**
      * @var PDO|null
@@ -751,32 +751,62 @@
             : $this->pdo->quote($data));
     }
 
-  /**
-   * @param array $data
-   *
-   * @return bool|string|int|null
-   */
-  public function insert(array $data)
-  {
-    $query = 'INSERT INTO ' . $this->from;
+    /**
+     * @param array $data
+     *
+     * @return bool|string|int|null
+     */
+    public function insert(array $data)
+    {
+      $query = 'INSERT INTO ' . $this->from;
 
-    $values = array_values($data);
-    if (isset($values[0]) && is_array($values[0])) {
-      $column = implode(', ', array_keys($values[0]));
-      $query .= ' (' . $column . ') VALUES ';
-      foreach ($values as $value) {
-        $val = implode(', ', array_map([$this, 'escape'], $value));
-        $query .= '(' . $val . '), ';
+      $values = array_values($data);
+      if (isset($values[0]) && is_array($values[0])) {
+        $column = implode(', ', array_keys($values[0]));
+        $query .= ' (' . $column . ') VALUES ';
+        foreach ($values as $value) {
+          $val = implode(', ', array_map([$this, 'escape'], $value));
+          $query .= '(' . $val . '), ';
+        }
+        $query = trim($query, ', ');
+      } else {
+        $column = implode(', ', array_keys($data));
+        $val = implode(', ', array_map([$this, 'escape'], $data));
+        $query .= ' (' . $column . ') VALUES (' . $val . ')';
       }
-      $query = trim($query, ', ');
-    } else {
-      $column = implode(', ', array_keys($data));
-      $val = implode(', ', array_map([$this, 'escape'], $data));
-      $query .= ' (' . $column . ') VALUES (' . $val . ')';
+      
+      return $query;
     }
-    
-    return $query;
-  }
+
+    /**
+     * @param array $data
+     *
+     * @return mixed|string
+     */
+    public function update(array $data)
+    {
+      $query = 'UPDATE ' . $this->from . ' SET ';
+      $values = [];
+
+      foreach ($data as $column => $val) {
+        $values[] = $column . '=' . $this->escape($val);
+      }
+      $query .= implode(',', $values);
+
+      if (!is_null($this->where)) {
+        $query .= ' WHERE ' . $this->where;
+      }
+
+      if (!is_null($this->orderBy)) {
+        $query .= ' ORDER BY ' . $this->orderBy;
+      }
+
+      if (!is_null($this->limit)) {
+        $query .= ' LIMIT ' . $this->limit;
+      }
+
+      return $query;
+    }
 
     /**
      * @return void
