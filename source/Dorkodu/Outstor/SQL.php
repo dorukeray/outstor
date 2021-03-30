@@ -5,7 +5,7 @@
   use PDO;
   
   /**
-   * SQL Query Builder
+   * SQL - the SQL Query Builder Helper Class
    *
    * @author   Doruk Eray (@dorkodu) <doruk@dorkodu.com>
    * @web      <http://dorkodu.com>
