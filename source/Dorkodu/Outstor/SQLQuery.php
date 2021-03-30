@@ -51,7 +51,7 @@
      * Class constructor.
      * @param string $prefix optional prefix for table names.
      */
-    public function __construct(\PDO $pdo, string $prefix = '')
+    public function __construct(PDO $pdo, string $prefix = '')
     {
       $this->pdo = $pdo;
       $this->prefix = $prefix;
@@ -751,6 +751,33 @@
             : $this->pdo->quote($data));
     }
 
+  /**
+   * @param array $data
+   *
+   * @return bool|string|int|null
+   */
+  public function insert(array $data)
+  {
+    $query = 'INSERT INTO ' . $this->from;
+
+    $values = array_values($data);
+    if (isset($values[0]) && is_array($values[0])) {
+      $column = implode(', ', array_keys($values[0]));
+      $query .= ' (' . $column . ') VALUES ';
+      foreach ($values as $value) {
+        $val = implode(', ', array_map([$this, 'escape'], $value));
+        $query .= '(' . $val . '), ';
+      }
+      $query = trim($query, ', ');
+    } else {
+      $column = implode(', ', array_keys($data));
+      $val = implode(', ', array_map([$this, 'escape'], $data));
+      $query .= ' (' . $column . ') VALUES (' . $val . ')';
+    }
+    
+    return $query;
+  }
+
     /**
      * @return void
      */
@@ -779,8 +806,8 @@
     private function optimizeSelect($fields)
     {
       $this->select = $this->select === '*'
-        ? $fields
-        : $this->select . ', ' . $fields;
+                        ? $fields
+                        : $this->select . ', ' . $fields;
     }
 
     /**
@@ -791,4 +818,8 @@
       return $this->query;
     }
 
+    public function __toString()
+    {
+      return $this->getAll();
+    }
   }
