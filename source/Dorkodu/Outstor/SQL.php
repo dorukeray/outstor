@@ -837,6 +837,46 @@
     }
 
     /**
+     * @return string
+     */
+    public function analyze()
+    {
+      return 'ANALYZE TABLE ' . $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function check()
+    {
+      return 'CHECK TABLE ' . $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function checksum()
+    {
+      return 'CHECKSUM TABLE ' . $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function optimize()
+    {
+      return 'OPTIMIZE TABLE ' . $this->from;
+    }
+
+    /**
+     * @return string
+     */
+    public function repair()
+    {
+      return 'REPAIR TABLE ' . $this->from;
+    }
+
+    /**
      * @return void
      */
     protected function reset()
@@ -867,15 +907,7 @@
                         ? $fields
                         : $this->select . ', ' . $fields;
     }
-
-    /**
-     * @return string|null
-     */
-    public function getQuery()
-    {
-      return $this->query;
-    }
-
+    
     public function __toString()
     {
       return $this->getAll();
