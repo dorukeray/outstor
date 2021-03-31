@@ -230,6 +230,42 @@
       return $this->queryCount;
     }
 
+    /**
+     * Executes the current query, or the statement with the given array
+     *
+     * @param array $params
+     * 
+     * @return int number of rows affected, on success
+     * @return false on failure
+     */
+    public function execute(array $params = [])
+    {
+      if (is_null($this->query) && is_null($this->statement)) {
+        return null;
+      }
+
+      # if there are params, bind them
+      if (isset($this->statement)) {
+        $result = $this->statement->execute($params);
+
+        if ($result === false) {
+          $this->error = $this->pdo->errorInfo()[2];
+          $this->error();
+        } else {
+          $result = $this->statement->rowCount();
+          $this->numRows = $result;
+          $this->queryCount++;
+        }
+      } else {
+        # directly execute the query      
+        $result = $this->pdo->exec($this->query);
+        if ($this->result === false) {
+          $this->error = $this->pdo->errorInfo()[2];
+          $this->error();
+        }
+      }
+      return $result;
+    }
 
 
   }
