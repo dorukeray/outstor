@@ -24,7 +24,7 @@ If want to see everything you need, check out the [docs](DOCS.md).
 
 ### Here is a sample :
 
-> [Warning!] This library is still under development. Please wait for us to finish it up!]
+> **Warning!** This library is still under development. Please wait till we release the stable 1.0 version.
 
 ## Author
 
