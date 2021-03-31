@@ -115,4 +115,20 @@
       $this->pdo = null;
     }
 
+    /**
+     * @return int
+     */
+    public function numRows()
+    {
+      return $this->numRows;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function insertId()
+    {
+      return $this->insertId;
+    }
+
   }
