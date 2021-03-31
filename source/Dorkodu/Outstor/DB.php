@@ -199,6 +199,37 @@
       return $this->pdo->rollBack();
     }
 
+    /**
+     * @param string $query SQL query that you want to run
+     * @param bool $noPrepare
+     *
+     * @return $this|mixed
+     */
+    public function query($query, $noPrepare = false)
+    {
+      $this->reset();
+
+      $this->query = $query;
+
+      # if the query won't be executed straightly
+      if (!$noPrepare) {
+        # will prepare the current query, and it will be reusable.
+        $this->statement = $this->pdo->prepare($query);
+      } else {
+        $this->query = preg_replace('/\s\s+|\t\t+/', ' ', trim($query));
+      }
+
+      return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function queryCount()
+    {
+      return $this->queryCount;
+    }
+
 
 
   }
