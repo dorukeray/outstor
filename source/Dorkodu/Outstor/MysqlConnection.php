@@ -45,6 +45,7 @@
                     : (strstr($host, ':') ? explode(':', $host)[1] : '');
 
       $this->charset = $charset;
+      echo "charset: $charset   ";
       $this->collation = $collation;
     }
 

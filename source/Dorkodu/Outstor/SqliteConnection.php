@@ -26,6 +26,6 @@
 
     public function getDSN()
     {
-      return sprintf('sqlite:%s', $this->database);
+      return sprintf('sqlite: %s', $this->database);
     }
   }
