@@ -131,4 +131,23 @@
       return $this->insertId;
     }
 
+    /**
+     * @throw PDOException
+     */
+    public function error()
+    {
+      if ($this->debug === true) {
+        if (php_sapi_name() === 'cli') {
+          die(sprintf("\n.::Database Error::.\nQuery: %s\nError: %s\n", $this->query, $this->error));
+        } else {
+          die(<<<HTML
+          <h1>Database Error</h1>
+          <h4>Query: <em style="font-weight:normal;">{$this->query}</em></h4>
+          <h4>Error: <em style="font-weight:normal;">{$this->error}</em></h4>
+          HTML);
+        }
+      }
+      throw new PDOException($this->error . '. (' . $this->query . ')');
+    }
+
   }
