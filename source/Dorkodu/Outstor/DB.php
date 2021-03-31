@@ -267,5 +267,66 @@
       return $result;
     }
 
+    /**
+     * @param array $params
+     * @param string $type
+     * @param string $argument
+     * @param bool $all
+     *
+     * @return mixed
+     */
+    public function fetch(array $params = array(), $type = null, $argument = null, $all = false)
+    {
+      if (is_null($this->query) && is_null($this->statement)) {
+        return null;
+      }
 
+      if (isset($this->statement)) {
+
+        $result = $this->statement->execute($params);
+
+        if ($result === false) {
+          $this->error = $this->pdo->errorInfo()[2];
+          $this->error();
+        } else {
+          $result = $this->statement->rowCount();
+          $this->numRows = $result;
+          $this->queryCount++;
+          # fetch the results
+          $this->result = $all ? $this->statement->fetchAll() : $this->statement->fetch();
+        }
+      } else {
+        $stmt = $this->pdo->query($this->query);
+        
+        if ($stmt) {
+          $this->numRows = $stmt->rowCount();
+          if ($this->numRows > 0) {
+            if ($type === PDO::FETCH_CLASS) {
+              $stmt->setFetchMode($type, $argument);
+            } else {
+              $stmt->setFetchMode($type);
+            }
+            $this->result = $all ? $stmt->fetchAll() : $stmt->fetch();
+          }          
+        } else {
+          $this->error = $this->pdo->errorInfo()[2];
+          $this->error();
+        }
+      }
+
+      $this->numRows = is_array($result) ? count($result) : 1;
+      return $result;
+    }
+
+    /**
+     * @param array $params
+     * @param string $type
+     * @param string $argument
+     *
+     * @return mixed
+     */
+    public function fetchAll(array $params = array(), $type = null, $argument = null)
+    {
+      return $this->fetch($params, $type, $argument, true);
+    }
   }
