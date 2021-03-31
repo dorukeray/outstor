@@ -329,4 +329,28 @@
     {
       return $this->fetch($params, $type, $argument, true);
     }
+
+
+    /**
+     * Tells if the query is a command, not a returning operation.
+     * Not like those : SELECT, OPTIMIZE, CHECK, REPAIR, CHECKSUM, ANALYZE
+     *
+     * @return boolean
+     */
+    protected function isCommand()
+    {
+      $str = true;
+
+      if (!empty($this->query)) {
+        foreach (['select', 'optimize', 'check', 'repair', 'checksum', 'analyze'] as $value) {
+          if (stripos($this->query, $value) === 0) {
+            $str = false;
+            break;
+          }
+        }
+      }
+      
+      return $str;
+    }
+
   }
