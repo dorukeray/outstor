@@ -150,4 +150,55 @@
       throw new PDOException($this->error . '. (' . $this->query . ')');
     }
 
+    /**
+     * @param $data
+     *
+     * @return string
+     */
+    public function escape($data)
+    {
+      return $data === null ? 'NULL' : (is_int($data) || is_float($data) ? $data : $this->pdo->quote($data));
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function transaction()
+    {
+      if (!$this->transactionCount++) {
+        return $this->pdo->beginTransaction();
+      }
+
+      $this->pdo->exec('SAVEPOINT trans' . $this->transactionCount);
+      return $this->transactionCount >= 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function commit()
+    {
+      if (!--$this->transactionCount) {
+        return $this->pdo->commit();
+      }
+
+      return $this->transactionCount >= 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function rollBack()
+    {
+      if (--$this->transactionCount) {
+        $this->pdo->exec('ROLLBACK TO trans' . ($this->transactionCount + 1));
+        return true;
+      }
+
+      return $this->pdo->rollBack();
+    }
+
+
+
   }
