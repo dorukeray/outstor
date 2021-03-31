@@ -62,4 +62,57 @@
      */
     protected $transactionCount = 0;
 
+    /**
+     * DB constructor.
+     *
+     * @param array $config
+     */
+    public function __construct($isDevEnvironment = false, $prefix = '')
+    {
+      $this->debug = $isDevEnvironment;
+      $this->prefix = $prefix;
+    }
+
+    public function connect(IConnection $connection)
+    {
+      try {
+        
+        # create a PDO instance
+        if ($connection instanceof SqliteConnection) {
+          $this->pdo = new PDO($connection->getDSN());
+        } else {
+          $this->pdo = new PDO($connection->getDSN(), $connection->user, $connection->password);
+        }
+
+        # if using mysql, then use buffered query
+        if ($connection instanceof MysqlConnection) {
+          $this->pdo->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);          
+        }
+
+        # setup the connection
+        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+
+        $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        # assign the connection
+        $this->connection = $connection;
+        return true;
+      } catch (Exception $e) {
+        throw $e;
+        return false;
+      }
+    }
+
+    /**
+     * Disconnects from the database.
+     *
+     * @return void
+     */
+    public function disconnect()
+    {
+      $this->connection = null;
+      $this->pdo = null;
+    }
+
   }
