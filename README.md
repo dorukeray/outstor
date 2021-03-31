@@ -24,9 +24,7 @@ If want to see everything you need, check out the [docs](DOCS.md).
 
 ### Here is a sample :
 
-```php
-[ Warning! ] This library is still under development. Please wait for us to finish it up!]
-```
+> [Warning!] This library is still under development. Please wait for us to finish it up!]
 
 ## Author
 
