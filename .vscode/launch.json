@@ -11,7 +11,7 @@
       "port": 9000
     },
     {
-      "name": "Launch currently open script",
+      "name": "Run with PHP CLI",
       "type": "php",
       "request": "launch",
       "program": "${file}",
