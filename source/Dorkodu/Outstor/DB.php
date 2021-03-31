@@ -353,4 +353,54 @@
       return $str;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getQuery()
+    {
+      return $this->query;
+    }
+
+    /**
+     * @return void
+     */
+    public function __destruct()
+    {
+      $this->disconnect();
+    }
+
+    /**
+     * @return void
+     */
+    protected function reset()
+    {
+      $this->numRows = 0;
+      $this->insertId = null;
+      $this->query = null;
+      $this->statement = null;
+      $this->error = null;
+      $this->result = [];
+      $this->transactionCount = 0;
+    }
+
+    /**
+     * @param  $type
+     *
+     * @return int
+     */
+    protected function getFetchType($type)
+    {
+      return $type === 'class'
+        ? PDO::FETCH_CLASS
+        : ($type === 'array'
+          ? PDO::FETCH_ASSOC
+          : PDO::FETCH_OBJ);
+    }
+
+    public function __get($name)
+    {
+      return $this->$name;
+    }
+
+    public function __set($name, $value) {}
   }
